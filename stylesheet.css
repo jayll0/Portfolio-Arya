@@ -166,3 +166,10 @@ body{
 #pacmanCanvas {
     background-color: #000;
 }
+
+// Prevent the default action of arrow keys to avoid scrolling
+window.addEventListener("keydown", function (e) {
+    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.key) > -1) {
+        e.preventDefault();
+    }
+}, false);
