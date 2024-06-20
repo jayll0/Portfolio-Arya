@@ -1,3 +1,10 @@
+// Prevent the default action of arrow keys to avoid scrolling
+window.addEventListener("keydown", function (e) {
+    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.key) > -1) {
+        e.preventDefault();
+    }
+}, false);
+
 const canvas = document.getElementById("pacmanCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -46,7 +53,8 @@ function draw() {
 function gameLoop() {
     update();
     draw();
-    requestAnimationFrame(gameLoop);
+    requestAnimationFrame(gameLoop); // Continue the loop
 }
 
-gameLoop();
+// Start the game loop
+requestAnimationFrame(gameLoop);
