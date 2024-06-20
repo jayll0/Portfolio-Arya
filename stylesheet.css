@@ -1,175 +1,59 @@
-*
+// Prevent the default action of arrow keys to avoid scrolling
 window.addEventListener("keydown", function (e) {
     if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.key) > -1) {
         e.preventDefault();
     }
 }, false);
-{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'poppins' , sans-serif;
 
-}
-body{
-    color: white;
-}
-.header
-{
-    position:fixed;
-    top:0;
-    left:0;
-    width: 100%;
-    padding: 20px 10%;
-    background: transparent;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index:100;
-    background: aqua;
-    color: black;
-    box-shadow: 0 0 20px aqua;
+const canvas = document.getElementById("pacmanCanvas");
+const ctx = canvas.getContext("2d");
 
-}
-.logo{
-        position: relative;
-        font-size: 25px;
-        color: white;
-        text-decoration: none;
-        font-weight: 600;
-        cursor: default;
-        opacity: 0;
-        animation: slideRight 1s ease forwards;
-}
-.navbar a {
-    display: inline-block;
-    font-size: 25px;
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    margin-left: 35px;
-    transition: .3s;
-    animation: slideTop .5s ease forwards;
+const pacman = {
+    x: 50,
+    y: 50,
+    radius: 20,
+    direction: 0,
+    speed: 2
+};
 
+const keyMap = {
+    ArrowUp: { dx: 0, dy: -1, direction: 1.5 * Math.PI },
+    ArrowDown: { dx: 0, dy: 1, direction: 0.5 * Math.PI },
+    ArrowLeft: { dx: -1, dy: 0, direction: Math.PI },
+    ArrowRight: { dx: 1, dy: 0, direction: 0 }
+};
 
-}
-.navbar a:hover{
-    color:black;
-}
-.home{
-    position: relative;
-    width: 100%;
-    justify-content: space-between;
-    height: 100vh;
-    background: url(https://i.pinimg.com/750x/3c/58/64/3c586468a82f52766d2f338760a05b2f.jpg) no-repeat;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    padding: 70px 10% 0;
-
-}
-.home-content {
-    max-width: 600px;
-}
-.home-content h3 {
-    font-size: 32px;
-    font-weight: 700;
-}
-.home-content h3:nth-of-type(2){
-    margin-bottom: 30px;
-}
-.home-content h3 span{
-    color: cyan;
-}
-.home-content h1 {
-    font-size: 56px;
-    font-weight: 700;
-    margin: -3px 0;
-
-}
-.home-content p {
-    font-size:20;
-    color: aqua;
-    margin-right: 50px;
-}
-
-
-.home-sci a {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    background: transparent;
-    border: 2px solid aqua;
-    border-radius: 50%;
-    font-size: 20px;
-    color: aqua;
-    text-decoration: none;
-    margin: 30px 15px 30px 0;
-}
-.home-sci a:hover{
-    background: aqua;
-    color: black;
-    box-shadow: 0 0 20px aqua;
-
-}
-.btn-box{
-    display: inline-block;
-    padding: 12px 28px;
-    background: aqua;
-    border-radius: 40px;
-    font-size: 16px;
-    color:black;
-    letter-spacing: 1px;
-    text-decoration: none;
-    font-weight: 600px;
-}
-.btn-box:hover{
-    box-shadow: 0 0 5px cyan,
-    0 0 25px cyan, 0 0 50px cyan,
-    0 0 100px cyan, 0 0 20px cyan
-}
-
-
-@keyframes slideRight{
-    0%{
-        transform: translateX(-100);
-        opacity: 0;
+document.addEventListener("keydown", (event) => {
+    if (keyMap[event.key]) {
+        pacman.dx = keyMap[event.key].dx * pacman.speed;
+        pacman.dy = keyMap[event.key].dy * pacman.speed;
+        pacman.direction = keyMap[event.key].direction;
     }
-    100%{
-        transform: translateX(0px);
-        opacity: 1;
+});
 
-    }
+function update() {
+    pacman.x += pacman.dx || 0;
+    pacman.y += pacman.dy || 0;
+
+    if (pacman.x < pacman.radius) pacman.x = pacman.radius;
+    if (pacman.x > canvas.width - pacman.radius) pacman.x = canvas.width - pacman.radius;
+    if (pacman.y < pacman.radius) pacman.y = pacman.radius;
+    if (pacman.y > canvas.height - pacman.radius) pacman.y = canvas.height - pacman.radius;
 }
 
-@keyframes slideTop{
-    0%{
-        transform: translateY(100);
-        opacity: 0;
-    }
-    100%{
-        transform: translateY(0px);
-        opacity: 1;
-
-    }
-    
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "yellow";
+    ctx.beginPath();
+    ctx.arc(pacman.x, pacman.y, pacman.radius, pacman.direction + 0.25 * Math.PI, pacman.direction + 1.75 * Math.PI);
+    ctx.lineTo(pacman.x, pacman.y);
+    ctx.fill();
 }
 
-
-/* Game Section */
-.game-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 50px 0;
-    background-color: #1a1a1a;
+function gameLoop() {
+    update();
+    draw();
+    requestAnimationFrame(gameLoop);
 }
 
-#pacmanCanvas {
-    background-color: #000;
-}
-
-
+gameLoop();
