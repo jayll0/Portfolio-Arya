@@ -11,46 +11,50 @@
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
 </head>
 
-<body bgcolor="black">
-     <header class="header">
+<body style="background-color: black;">
+    <header class="header">
         <a href="#" class="logo">Portfolio</a>
         <nav class="navbar">
             <a href="#" onclick="openCV()">Curriculum Vitae</a>
         </nav>
     </header>
 
-    <script>
-        function openCV() {
-            window.open("https://www.google.com/search?q=google&rlz=1C1CHBF_enID1061ID1061&oq=google&gs_lcrp=EgZjaHJvbWUqDAgAECMYJxiABBiKBTIMCAAQIxgnGIAEGIoFMhMIARAuGIMBGMcBGLEDGNEDGIAEMgYIAhBFGEAyBggDEEUYPDIGCAQQRRg8MgYIBRBFGDwyBggGEEUYPDIGCAcQRRg80gEHODgyajBqN6gCALACAA&sourceid=chrome&ie=UTF-8", "_blank");
-        }
-    </script>
-</nav>
-
-
-            
-        </nav>
-    </header>
     <section class="home">
-         <div class="home-content">
+        <div class="home-content">
             <h3>Hello, It's Me</h3>
             <h1>Arya Wijaya</h1>
-            <h3>  im a <span class="text"></span></h3>
-            <p>Welcome, this website continues
- to develop as time goes by
-            </p>
+            <h3>I'm a <span class="text"></span></h3>
+            <p>Welcome, this website continues to develop as time goes by</p>
             <div class="home-sci">
                 <a href="https://www.instagram.com/aryawywa/" target="_blank"><i class='bx bxl-instagram'></i></a>
                 <a href="https://wa.link/w5jijv" target="_blank"><i class='bx bxl-whatsapp'></i></a>
-    </div>
-    <a href="https://github.com/jayll0" class="btn-box">Projects</a>
-</section>
+            </div>
+            <a href="https://github.com/jayll0" class="btn-box">Projects</a>
+        </div>
+    </section>
+
     <section class="game-section">
         <div id="pacman-game">
             <canvas id="pacmanCanvas" width="400" height="400"></canvas>
         </div>
     </section>
+
+    <script>
+        function openCV() {
+            window.open("https://www.google.com/search?q=google&rlz=1C1CHBF_enID1061ID1061&oq=google", "_blank");
+        }
+
+        // Typed.js initialization
+        var typed = new Typed('.text', {
+            strings: ["Developer", "Designer", "Freelancer"],
+            typeSpeed: 100,
+            backSpeed: 60,
+            loop: true
+        });
+    </script>
+
     <script src="main.js"></script>
-    <script src="packman.js"></script>
+    <script src="pacman.js"></script>
 </body>
 
 </html>
